@@ -2,11 +2,9 @@ package rewind.jpashop.domain;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
-import jdk.jfr.Enabled;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Entity
+@Getter
 @Embeddable
 public class Address {
 

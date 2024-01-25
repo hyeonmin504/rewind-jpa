@@ -2,6 +2,7 @@ package rewind.jpashop.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.mapping.Join;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +16,13 @@ public class Category {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
+    @OneToMany(mappedBy = "category")
     private List<Item> items = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
     private Category parent;
 
-    private List<Category> child;
+    @OneToMany(mappedBy = "parent")
+    private List<Category> child = new ArrayList<>();
 }
