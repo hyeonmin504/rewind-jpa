@@ -2,7 +2,7 @@ package rewind.jpashop.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.mapping.Join;
+import rewind.jpashop.domain.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;

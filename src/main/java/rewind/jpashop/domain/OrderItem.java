@@ -2,6 +2,7 @@ package rewind.jpashop.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import rewind.jpashop.domain.item.Item;
 
 @Entity
 @Getter

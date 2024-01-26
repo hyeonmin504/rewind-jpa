@@ -1,11 +1,13 @@
-package rewind.jpashop.domain;
+package rewind.jpashop.domain.item;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import rewind.jpashop.domain.Category;
 
 @Entity
 @Getter
-public class Item {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Item {
 
     @Id @GeneratedValue
     @Column(name = "item_id")
