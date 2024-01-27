@@ -2,6 +2,7 @@ package rewind.jpashop.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -20,6 +21,7 @@ public class Delivery {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
-
-
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }

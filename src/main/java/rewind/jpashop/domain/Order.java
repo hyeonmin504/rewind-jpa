@@ -26,7 +26,7 @@ public class Order {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    @OneToMany()
+    @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
 
@@ -35,5 +35,16 @@ public class Order {
         this.member = member;
         this.delivery = delivery;
         this.orderItems = orderItems;
+    }
+
+    // == 생성자 매서드 == //
+    public void setMember(Member member){
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void setDelivery(Delivery delivery){
+        this.delivery = delivery;
+        delivery.setOrder(this);
     }
 }

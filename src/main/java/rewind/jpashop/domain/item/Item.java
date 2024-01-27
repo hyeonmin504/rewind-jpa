@@ -20,4 +20,10 @@ public abstract class Item {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    // == 양방향 연관관계 == //
+    public void setCategory(Category category) {
+        this.category = category;
+        category.getItems().add(this);
+    }
 }
