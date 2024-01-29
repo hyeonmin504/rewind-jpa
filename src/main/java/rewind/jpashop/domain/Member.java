@@ -30,4 +30,8 @@ public class Member {
     public Member(String username) {
         this.username = username;
     }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }

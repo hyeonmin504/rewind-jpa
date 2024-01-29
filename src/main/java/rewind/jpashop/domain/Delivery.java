@@ -1,11 +1,14 @@
 package rewind.jpashop.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Delivery {
 
     @Id @GeneratedValue
@@ -23,5 +26,14 @@ public class Delivery {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Delivery(Address address, DeliveryStatus deliveryStatus) {
+        this.address = address;
+        this.deliveryStatus = deliveryStatus;
     }
 }

@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,15 +30,20 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
-    public Order(Long id, Member member, Delivery delivery, List<OrderItem> orderItems) {
-        this.id = id;
-        this.member = member;
-        this.delivery = delivery;
-        this.orderItems = orderItems;
+    private LocalDateTime orderDate;
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
     }
 
-    // == 생성자 매서드 == //
+    public void changeStatus(OrderStatus status){
+        this.status = status;
+    }
+
+    // == 연관관계 매서드 == //
     public void setMember(Member member){
         this.member = member;
         member.getOrders().add(this);
@@ -52,4 +58,34 @@ public class Order {
         this.delivery = delivery;
         delivery.setOrder(this);
     }
+
+    // == 생성 메서드 == //
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for (OrderItem orderItem : orderItems){
+            order.setOrderItem(orderItem);
+        }
+        order.changeStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
+
+    // == 비즈니스 로직 == //
+    public void cancel() {
+        if(delivery.getDeliveryStatus() == DeliveryStatus.COMP) {
+            throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다");
+        }
+        this.changeStatus(OrderStatus.CANCEL);
+        for (OrderItem orderItem : orderItems){
+            orderItem.cancel();
+        }
+    }
+
+    // == 조회 로직 == //
+    public int getTotalPrice() {
+        return orderItems.stream().mapToInt(OrderItem::getTotalPrice).sum();
+    }
+
 }
