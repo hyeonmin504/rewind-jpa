@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import rewind.jpashop.repository.MemberRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,13 @@ public class Member {
 
     public Member(String username) {
         this.username = username;
+    }
+
+    public Member(Long id, String username, Address address, List<Order> orders) {
+        this.id = id;
+        this.username = username;
+        this.address = address;
+        this.orders = orders;
     }
 
     public void setAddress(Address address) {

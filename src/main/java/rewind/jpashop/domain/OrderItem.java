@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import rewind.jpashop.domain.item.Item;
 
 @Entity
 @Getter
+@Table(name = "order_item")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
@@ -20,7 +20,7 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 

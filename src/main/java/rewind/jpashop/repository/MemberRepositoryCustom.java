@@ -1,8 +1,5 @@
 package rewind.jpashop.repository;
 
-import rewind.jpashop.domain.Member;
-
-import java.util.List;
-
 public interface MemberRepositoryCustom {
+    public void updateUsername(Long id, String username);
 }

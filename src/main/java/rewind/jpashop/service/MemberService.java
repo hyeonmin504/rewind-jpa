@@ -39,4 +39,16 @@ public class MemberService {
             throw new IllegalStateException("이미 존재하는 회원입니다");
         }
     }
+
+    @Transactional
+    public void update(Long id, String username) {
+        List<Member> byusername = memberRepository.findByusername(username);
+        if(byusername.isEmpty()){
+            memberRepository.updateUsername(id, username);}
+//        } else {
+//            throw new IllegalStateException("이미 존재하는 회원입니다");
+//        }
+
+
+    }
 }

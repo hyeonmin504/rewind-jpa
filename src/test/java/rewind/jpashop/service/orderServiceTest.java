@@ -1,5 +1,6 @@
 package rewind.jpashop.service;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.assertj.core.api.Assertions;
@@ -110,11 +111,12 @@ public class orderServiceTest {
         Long orderId = orderService.order(member.getId(), book.getId(), 10);
 
         //when
-        List<Order> orders = orderRepository.findAll("kim", OrderStatus.ORDER);
-        for (Order order : orders) {
+        List<Tuple> orders = orderRepository.findAll("kim",OrderStatus.ORDER);
+        for (Tuple order : orders) {
             System.out.println("order = " + order);
         }
         //then
+        Assertions.assertThat(orders.get(0)).isEqualTo(orderRepository.findById(orderId));
     }
 
 
