@@ -1,14 +1,12 @@
 package rewind.jpashop.repository;
 
-import com.querydsl.core.Tuple;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import rewind.jpashop.domain.OrderStatus;
-import rewind.jpashop.domain.QMember;
-import rewind.jpashop.domain.QOrder;
+import rewind.jpashop.domain.*;
 
 import java.util.List;
 
@@ -20,21 +18,28 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
     private final EntityManager em;
     JPAQueryFactory queryFactory;
 
+
     @Override
-    public List<Tuple> findAll(String username, OrderStatus status) {
+    public List<Order> findAllbyQuerydsl(OrderSearch orderSearch) {
         QOrder order = new QOrder("o");
         QMember member = new QMember("m");
+        QDelivery delivery = new QDelivery("d");
         queryFactory = new JPAQueryFactory(em);
+        BooleanBuilder builder = new BooleanBuilder();
 
+        if(orderSearch.getOrderStatus()!=null){
+            builder.and(order.status.eq(orderSearch.getOrderStatus()));
+        }
+        if(orderSearch.getMemberName()!=null) {
+            builder.and(member.username.eq(orderSearch.getMemberName()));
+        }
         return queryFactory
-                .select(order, member)
+                .select(order)
                 .from(order)
-                .join(order.member, member)
-                .where(member.username.eq(username))
-                        //order.status.eq(status))
+                .innerJoin(order.member, member).fetchJoin()
+                .innerJoin(order.delivery, delivery).fetchJoin()
+                .where(builder)
                 .fetch();
 
     }
-
-
 }

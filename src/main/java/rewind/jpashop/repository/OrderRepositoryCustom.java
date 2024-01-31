@@ -7,5 +7,5 @@ import rewind.jpashop.domain.OrderStatus;
 import java.util.List;
 
 public interface OrderRepositoryCustom {
-    public List<Tuple> findAll(String username, OrderStatus status);
+    public List<Order> findAllbyQuerydsl(OrderSearch orderSearch);
 }
