@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface OrderRepositoryCustom {
     public List<Order> findAllbyQuerydsl(OrderSearch orderSearch);
+
+    List<Order> findAllWithMemberDelivery();
 }

@@ -14,10 +14,7 @@ import rewind.jpashop.domain.*;
 import rewind.jpashop.domain.item.Book;
 import rewind.jpashop.domain.item.Item;
 import rewind.jpashop.exception.NotEnoughStockException;
-import rewind.jpashop.repository.ItemRepository;
-import rewind.jpashop.repository.MemberRepository;
-import rewind.jpashop.repository.OrderItemRepository;
-import rewind.jpashop.repository.OrderRepository;
+import rewind.jpashop.repository.*;
 
 import java.util.List;
 
@@ -111,12 +108,10 @@ public class orderServiceTest {
         Long orderId = orderService.order(member.getId(), book.getId(), 10);
 
         //when
-        List<Tuple> orders = orderRepository.findAll("kim",OrderStatus.ORDER);
-        for (Tuple order : orders) {
-            System.out.println("order = " + order);
-        }
+        Order order1 = orderRepository.findById(orderId).get();
+
         //then
-        Assertions.assertThat(orders.get(0)).isEqualTo(orderRepository.findById(orderId));
+        Assertions.assertThat(order1.getId()).isEqualTo(orderRepository.findById(orderId));
     }
 
 

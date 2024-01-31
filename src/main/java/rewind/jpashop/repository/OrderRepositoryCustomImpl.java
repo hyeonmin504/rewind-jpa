@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
 
     private final EntityManager em;
@@ -41,5 +41,13 @@ public class OrderRepositoryCustomImpl implements OrderRepositoryCustom{
                 .where(builder)
                 .fetch();
 
+    }
+
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery(
+                "select o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d", Order.class
+        ).getResultList();
     }
 }
