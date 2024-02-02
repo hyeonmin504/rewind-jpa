@@ -28,6 +28,7 @@ public class initDb {
         public void dbInit1(){
             Member member = new Member("kim");
             member.setAddress(new Address("서울", "삼육대", "85"));
+            member.setAge(10);
             em.persist(member);
 
             Book book1 = new Book("autor", "isbn", "name", 10000, 5);
@@ -46,6 +47,7 @@ public class initDb {
         public void dbInit2(){
             Member member = new Member("lee");
             member.setAddress(new Address("경기도", "김포한강11로", "287"));
+            member.setAge(10);
             em.persist(member);
 
             Book book1 = new Book("autor3", "isbn3", "username", 30000, 15);

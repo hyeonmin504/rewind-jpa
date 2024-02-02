@@ -2,6 +2,7 @@ package rewind.jpashop.repository;
 
 import com.querydsl.core.Tuple;
 import jakarta.persistence.EntityManager;
+import org.aspectj.weaver.ast.Or;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,9 @@ public class OrderRepositoryCustomImplTest {
         Long orderId = orderService.order(member.getId(), book.getId(), 3);
         //when
         Order order = orderRepository.findById(orderId).get();
-
-        List<Tuple> orders = orderRepository.findAll("kim",OrderStatus.ORDER);
-        for (Tuple order1 : orders) {
+        OrderSearch orderSearch = new OrderSearch(order.getMember().getUsername(),order.getStatus());
+        List<Order> orders = orderRepository.findAllbyQuerydsl(orderSearch);
+        for (Order order1 : orders) {
             System.out.println("order1 = " + order1);
         }
         //then
