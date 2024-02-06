@@ -3,14 +3,18 @@ package rewind.jpashop.repository;
 import com.querydsl.core.Tuple;
 import jakarta.persistence.EntityManager;
 import org.aspectj.weaver.ast.Or;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+import rewind.jpashop.domain.Dto.MemberOrderDto;
 import rewind.jpashop.domain.Member;
 import rewind.jpashop.domain.Order;
 import rewind.jpashop.domain.OrderStatus;
@@ -20,6 +24,7 @@ import rewind.jpashop.service.OrderService;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
@@ -55,5 +60,21 @@ public class OrderRepositoryCustomImplTest {
         }
         //then
 
+    }
+
+    @Test
+    @Commit
+    public void OrderMemberDtoPageing() throws Exception {
+        //given
+        MemberOrderDto memberOrderDto = new MemberOrderDto();
+
+        PageRequest pageRequest = PageRequest.of(0,3);
+
+        Page<MemberOrderDto> result = orderRepository.searchPageSimple(memberOrderDto,pageRequest);
+
+        //when
+        //then
+        assertThat(result.getSize()).isEqualTo(3);
+        assertThat(result.getContent()).extracting("username").containsExactly("kim","lee");
     }
 }

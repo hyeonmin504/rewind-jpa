@@ -1,5 +1,7 @@
 package rewind.jpashop.repository;
 
+import org.springframework.data.domain.Pageable;
+import rewind.jpashop.domain.Dto.MemberOrderDto;
 import rewind.jpashop.domain.Member;
 
 import java.util.List;

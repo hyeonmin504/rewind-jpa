@@ -1,11 +1,16 @@
 package rewind.jpashop.repository;
 
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import rewind.jpashop.domain.Dto.MemberOrderDto;
 import rewind.jpashop.domain.Member;
 import rewind.jpashop.domain.QMember;
+import rewind.jpashop.domain.QOrder;
 
 import java.util.List;
 
